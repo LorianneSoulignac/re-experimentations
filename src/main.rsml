@@ -1,0 +1,113 @@
+Environment:
+- The number of rotors is equal to 4 .
+- The number of clamp is equal to 1 .
+- The max weight of the parcel is equal to 10 [kg].
+- The max size of the parcel is equal to 1 [m]. 
+- Low battery status is equal to 10 [percent].
+- The minimum safe height is equal to 50 [m].
+- The minimum safe height is equal to 50 [m].
+
+[0.1] "[ 
+	The aim of the automatic delivery drone (later called "the drone") is to transport parcels from the commercial enterprise warehouse to its customers. The drone is a quadricopter equipped with a clamp.
+]"
+
+[0.2] "[
+	When activated, the drone shall take over a parcel (pick it in the warehouse and deliver it).
+]"
+
+[0.3] "[
+	The drone shall be controlled by a web application, and being accessible all the time by this application.
+]"
+
+[0.4] "[
+	In normal mode, the drone shall be fully automated, but an operator must be able to switch to control mode to take control of the drone with the application.	
+]"
+
+[0.4.1] (refines [0.4]) Drone mode could be equal to normal mode or drone mode could be equal to control mode.
+
+[0.5] "[
+	The drone is propelled by four rotors, each driven by a brushless motor. The power shall be enough to transport parcels weighing up to 10 kg and with a size up to 1x1 m. 	
+]"
+
+Behavior:
+[1.1] "[
+	The drone shall pick up a parcel, go to the destination and drop it off when activated on the web application.
+]"
+[1.1.1] (parts of [1.1]) When the drone status is equal to activated then eventually attached parcel shall be not equal to null within 120 [s].
+[1.1.2] (parts of [1.1]) When attached parcel is not equal to null then eventually drone location shall be equal to destination within 1500 [s].
+[1.1.3] (parts of [1.1] and parts of [1.4]) When drone location is equal to destination then eventually attached parcel shall be equal to null within 120 [s].
+
+
+[1.2] "[
+	An operator shall assign a parcel (identified by a unique identifier -- encoded in a QR code on the parcel -- and a position in the warehouse) to a drone through the application.
+]"
+[1.2.1] (parts of [1.2]) When the drone status is equal to activated then immediately assigned parcel shall be not equal to null and parcel position shall be not equal to null.
+
+[1.3] (repeats [1.1]) "[
+	The drone shall go to the parcel, catch it, and deliver it to the destination (collected from a service that give a destination (GPS coordinates) given an identifier).
+]"
+
+[1.4] "[
+	When the destination is reached, the drone shall drop the parcel and return back to the warehouse to its charge station.	
+]"
+[1.4.1] (parts of [1.4]) When drone location is equal to destination and attached parcel is equal to null then immediately drone status shall be equal to return.
+[1.4.2] (parts of [1.4]) When drone location is equal to destination and attached parcel is equal to null then eventually drone location shall be equal to charge station location within 1500 [s].
+
+Handling:
+[2] (refines [1.1.1]) When assigned parcel is not equal to null then eventually drone location shall be equal to parcel position and attached parcel shall be not equal to null within 120 [s].
+
+[2.1] (is an alternative of [2]) When drone location is equal to parcel position and scanned QR code is not equal to assigned parcel then immediately application status must be equal to invalid parcel.
+
+[2.2] (is an alternative of [2]) When drone location is equal to parcel position and scanned QR code is equal to null then immediately application status must be equal to missing parcel.
+[2.2.1] (refines [2.2]) The drone status must be equal to standby and the drone alarm must be equal to on.
+
+[2.3] (is an alternative of [2] and repeats [3.3]) When drone battery status is less or equal to low battery status then immediately the drone status shall be equal to in charge. 
+
+Status:
+[3.1] Battery status in application must be equal to drone battery status.
+[3.2] When drone battery status is less or equal to low battery status then immediately application status must be equal to low charge.
+[3.3] When drone status is equal to in charge and drone battery status is less or equal to low battery status then eventually drone status must be equal to in charge.
+
+Transport:
+[4.1] (repeats [1.1.2]) When attached parcel is not equal to null then eventually drone location shall be equal to destination within 1500 [s].
+[4.1.1] (refines [4.1]) The drone status shall be equal to delivering.
+
+[4.2] When assigned parcel is not equal to null then immediately the destination shall be equal to destination for the parcel from the webservice.
+
+[4.3] "Handled parcels must be transported carefully"
+
+[4.3.1] (refines [4.3]) "At any time, the drone avoids obstacles, flies at the minimum safe height and is able to stop in less than 1 second." 
+[4.3.1.1] (parts of [4.3.1]) "The drone must avoid the obstacles"
+[4.3.1.1.1] (refines [4.3.1.1]) Nearest obstacle must be greater than 1.50 [m].
+[4.3.1.2] (parts of [4.3.1]) Drone altitude must be greater than minimum safe height.
+[4.3.1.2.1] (trace [4.3.1.2]) "[
+	This requirement is probably wrong, since there is no constraint. See []
+]"
+[4.3.1.3] (parts of [4.3.1]) Time to stop must be less than 1 [s].
+
+[4.3.2] "Parcels must be dropped carefully."
+[4.3.2.1] When drone position is equal to destination and drone status is equal to release then immediately the drone altitude must be less or equal to 10 [cm].
+
+[4.4] "If one or several components are malfunctioning, the drone send a message to an operator."
+[4.4.1] (refines [4.4]) When malfunction status is equal to true then immediately application status must be equal to malfunctioning drone.
+
+[4.5] "When its battery is low, the drone sends a message and lands."
+[4.5.1] (parts of [4.5] and repeats [3.2]) When the drone battery status is less or equal to low battery status then immediately application status must be equal to low charge.
+[4.5.2] (parts of [4.5] and contradicts [4.3.1.2]) When the drone battery status is less or equal to low battery status then eventually drone altitude must be equal to 0 [cm].
+[4.5.3] When the distance to warehouse is greater than 500 [m] and the drone battery status is less or equal to low battery status then eventually drone mode must be equal to recovery mode and position in application must be equal to drone location and drone altitude must be equal to 0 [cm].
+[4.5.3.1] (parts of [4.5.3]) When the distance to warehouse is greater than 500 [m] then immediately position in application must be equal to drone location.
+[4.5.3.2] (parts of [4.5.3]) When the drone battery status is less or equal to low battery status then eventually drone mode must be equal to recovery mode and drone altitude must be equal to 0 [cm] within 120 [s].
+
+Drop:
+[5] "Parcels are dropped at destination and parcels drop locations are confirmed by an operator."
+[5.1] (refines [5] and is an addition of [1.1.3]) When drone location is equal to destination then eventually attached parcel shall be equal to null and drop location status shall be equal to confirmed.
+[5.1.1] (parts of [5.1]) When drop location status is equal to confirmed then eventually attached parcel shall be equal to null and assigned parcel shall be equal to null within 120 [s].
+
+Return:
+[6] (repeats [1.4]) "When the drone has no more parcel assigned and attached, the drone shall go back to its charge station."
+[6.1] (refines [6] and refines [1.4.2]) When assigned parcel is equal to null and attached parcel is equal to null then eventually drone location shall be equal to charge station location within 1500 [s].
+
+Performance:
+[7.1] "The drone shall be able to fly during 1 hour."
+[7.2] "The drone shall be able to fly inside and outside."
+
