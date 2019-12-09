@@ -1,4 +1,47 @@
-# Alfred - Majordome de Batman
+# Rapport activité
+## Diagramme d'exigence
+![req](./image/req)
+
+###Description
+Le système du manoir requiert des capteurs qui mesure plusieurs valeurs de la maison.
+Ces capteurs sont composés de mesures de plusieurs indicateurs tels que la température, la production d'électricité, la charge de la voiture en différentes mesures.
+Aussi, le système de la maison contient un écran qui affiche les valeurs mesurer par les capteurs et qui, par conséquent, dépend des capteurs. 
+
+## Diagramme use case 
+![use case](./image/use_case)
+
+### Description
+L'utilisateur peut consulter le taux de charge de sa voiture en consultant l'affichage à l'intérieur de sa voiture. 
+L'utilisateur peut aussi consulter la présence ou non de courant d'air et voir la puissance de celui-ci.
+L'utilisateur peut aussi consulter la qualité de l'air en la calculant lui même par rapport aux valeur du taux de CO2 et du taux d'humidité
+L'utilisateur peut consulter la température de la maison qui doit être comprise entre 0 et 65 °.
+L'utilisateur peut consulter le bilan énergétique de la maison en consultant la production ainsi que la consommation électrique
+L'utilisateur peut consulter la quantité d'eau chaude disponible actuellement et peut par conséquent calculer dans combien de temps il pourra prendre une douche chaude.
+
+## Diagramme BDD
+![bdd](./image/BDD)
+
+### Description
+Il y a 4 sortes d'objets et 1 acteur : l'utilisateur qui va intéragir avec le système de la maison. 
+Celui-ci va contient des capteurs, 1 écran. 
+La voiture va être composé de capteurs qui permettront l'affichage de son taux de chargement. 
+L'écran est dépendant des capteurs puisqu'il va afficher les valeurs mesurer par les capteurs. 
+
+##Diagramme IBD
+![ibd](./image/ibd)
+
+#Diagramme de séquence
+![seq](./image/seq)
+
+### Description
+L'utilisateur doit aller à l'écran et selectionner l'icône "Energie",
+l'écran va envoyer une requête au système qui va activer
+les capteurs concernés. Ceux-ci vont prendre leurs mesures et les renvoyer au système.
+Le système va traiter les données et va les envoyer en réponse à l'écran. L'écran va lui,
+afficher un feed-back visuel.
+
+
+# SUJET DU DEPART : Alfred - Majordome de Batman
 
 L’idée est de créer un système qui viendra rendre les services suivants :
 
