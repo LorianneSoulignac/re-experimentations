@@ -1,6 +1,6 @@
 # Rapport activité
 ## Diagramme d'exigence
-![req](./image/req)
+![req](./image/req.png)
 
 ###Description
 Le système du manoir requiert des capteurs qui mesure plusieurs valeurs de la maison.
@@ -8,7 +8,7 @@ Ces capteurs sont composés de mesures de plusieurs indicateurs tels que la temp
 Aussi, le système de la maison contient un écran qui affiche les valeurs mesurer par les capteurs et qui, par conséquent, dépend des capteurs. 
 
 ## Diagramme use case 
-![use case](./image/use_case)
+![use case](./image/use_case.png)
 
 ### Description
 L'utilisateur peut consulter le taux de charge de sa voiture en consultant l'affichage à l'intérieur de sa voiture. 
@@ -19,7 +19,7 @@ L'utilisateur peut consulter le bilan énergétique de la maison en consultant l
 L'utilisateur peut consulter la quantité d'eau chaude disponible actuellement et peut par conséquent calculer dans combien de temps il pourra prendre une douche chaude.
 
 ## Diagramme BDD
-![bdd](./image/BDD)
+![bdd](./image/BDD.PNG)
 
 ### Description
 Il y a 4 sortes d'objets et 1 acteur : l'utilisateur qui va intéragir avec le système de la maison. 
@@ -28,10 +28,10 @@ La voiture va être composé de capteurs qui permettront l'affichage de son taux
 L'écran est dépendant des capteurs puisqu'il va afficher les valeurs mesurer par les capteurs. 
 
 ##Diagramme IBD
-![ibd](./image/ibd)
+![ibd](./image/ibd.png)
 
 #Diagramme de séquence
-![seq](./image/seq)
+![seq](./image/seq.PNG)
 
 ### Description
 L'utilisateur doit aller à l'écran et selectionner l'icône "Energie",
