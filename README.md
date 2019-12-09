@@ -2,7 +2,7 @@
 ## Diagramme d'exigence
 ![req](./image/req.png)
 
-###Description
+### Description
 Le système du manoir requiert des capteurs qui mesure plusieurs valeurs de la maison.
 Ces capteurs sont composés de mesures de plusieurs indicateurs tels que la température, la production d'électricité, la charge de la voiture en différentes mesures.
 Aussi, le système de la maison contient un écran qui affiche les valeurs mesurer par les capteurs et qui, par conséquent, dépend des capteurs. 
@@ -27,10 +27,10 @@ Celui-ci va contient des capteurs, 1 écran.
 La voiture va être composé de capteurs qui permettront l'affichage de son taux de chargement. 
 L'écran est dépendant des capteurs puisqu'il va afficher les valeurs mesurer par les capteurs. 
 
-##Diagramme IBD
+## Diagramme IBD
 ![ibd](./image/ibd.png)
 
-#Diagramme de séquence
+# Diagramme de séquence
 ![seq](./image/seq.PNG)
 
 ### Description
